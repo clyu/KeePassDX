@@ -31,6 +31,13 @@ android {
         
         manifestPlaceholders["googleAndroidBackupAPIKey"] = "unused"
         manifestPlaceholders["googlePlayServicesPackage"] = gmsPackage
+
+        // Packages the native libraries of the given ABIs only, as in -PabiFilters=arm64-v8a
+        providers.gradleProperty("abiFilters").orNull?.let { abis ->
+            ndk {
+                abiFilters += abis.split(",")
+            }
+        }
     }
 
     buildTypes {
